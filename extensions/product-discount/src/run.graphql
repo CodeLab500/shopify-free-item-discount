@@ -1,0 +1,27 @@
+# Define the structure of the input used by the Shopify Function
+query RunInput {
+  cart {
+    lines {
+      id                      # Unique identifier for each cart line
+      quantity                # Quantity of the item in the cart
+      cost {
+        totalAmount {
+          amount              # Total cost of this line item
+          currencyCode        # Currency used for the amount (e.g., USD)
+        }
+      }
+      merchandise {
+        # Only include if the merchandise is a ProductVariant
+        ... on ProductVariant {
+          product {
+            id                # Product ID
+            hasTags(tags: ["free-item"]) {
+              tag            # Tag name (should be "free-item")
+              hasTag         # Boolean indicating if the product has the tag
+            }
+          }
+        }
+      }
+    }
+  }
+}
