@@ -61,16 +61,14 @@ export function run(input) {
     }))
 
     // Return the discount results if the cart qualifies
-    return {
-      discounts: targets.map((target) => ({
-        ...target,
-        message: "100% off for a free-item product!" // Message shown to user at checkout
-      })),
-      discountApplicationStrategy: DiscountApplicationStrategy.First // Apply only the first discount
-    };
-
-  } else {
-    // Return no discount if the threshold is not met
-    return EMPTY_DISCOUNT;
+    return targets.length
+      ? {
+          discounts: targets.map((target) => ({
+            ...target,
+            message: "100% off for a free-item product!",
+          })),
+          discountApplicationStrategy: DiscountApplicationStrategy.First,
+        }
+      : EMPTY_DISCOUNT;
   }
 };
